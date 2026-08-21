@@ -52,7 +52,10 @@
       }
 
       @media (max-width: 768px) {
-        .iv-jobhead-logos { flex-wrap: wrap; }
+        /* Wrapped into two rows of two, with nothing between them: flex-wrap
+           gives no row gap of its own, so the rows sat directly on each other
+           while the columns had the whole half-width to breathe in. */
+        .iv-jobhead-logos { flex-wrap: wrap; row-gap: 1.75rem; }
         .iv-jobhead-logos a { width: 50%; }
 
         /* Images on a job ad break the frame on phones: 30px past each edge of
@@ -76,11 +79,17 @@
            Stated directly: 60px wider than the page, pulled back 30px.
 
            100% and not 100vw. They differ by exactly the scrollbar: 100vw counts
-           it, a block's width does not. The header is width:auto, so it stopped
-           at the body edge while the image reached 15px further, and that gap
-           read as the header being short on the right. Measuring the bleed
-           against the same box everything else is laid out in keeps the two
-           edges together whatever the scrollbar does.
+           it, a block's width does not.
+
+           The header band takes the same rule rather than a compensating one.
+           It was width:auto, so it ended at the page edge while the image ran
+           30px past it, and every attempt to close that from the header's side
+           -- 100vw, then removing the scrollbar track -- depended on body and
+           the viewport being the same width, which is exactly what varies. Two
+           elements that must be cut at the same place should be measured the
+           same way; then it does not matter where the cut falls. The band
+           bleeding is invisible in itself: it is a solid colour, and the only
+           thing that changes is that it now reaches wherever the image does.
 
            !important because ImageBlock sets max-width and margin-inline as
            inline styles for its Max width field, and a stylesheet does not beat
@@ -95,7 +104,8 @@
            scrolled out of the way: a bleed that appeared to be on one side
            only. On html the scrollWidth matches the viewport exactly. clip
            rather than hidden so no scroll container is created. */
-        html:has(.iv-jobhead) figure:not(.iv-jobarticle figure) {
+        html:has(.iv-jobhead) figure:not(.iv-jobarticle figure),
+        html:has(.iv-jobhead) .iv-jobhead {
           width: calc(100% + 60px) !important;
           max-width: none !important;
           margin: 0 -30px !important;
@@ -480,4 +490,4 @@
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
 </style><div class="cm-rich"><h2 id="varaktighet-arbetstid">Varaktighet, arbetstid</h2><p>Tjänsten är en tillsvidareanställning på 100% med placering på vårt kontor vid Mobilvägen 10 i Lund. Tillträde enligt överenskommelse.</p><h2 id="ansökan">Ansökan</h2><p>Ansökan, eller eventuella frågor, skickas till <a href="mailto:petronella@cupmanager.net">petronella@cupmanager.net</a></p></div></article> </main> <a id="preview-btn" href="" class="fixed bottom-20 right-6 bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-colors z-40 font-medium" style="display:none"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path> <circle cx="12" cy="12" r="3"></circle> </svg>
 Preview Changes
-</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.B6g4nlny.js"></script> </body></html>
+</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.DefyblOB.js"></script> </body></html>
