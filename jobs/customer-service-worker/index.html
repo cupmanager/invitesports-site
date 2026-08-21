@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="sv"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Självständig kundservice-medarbetare till växande sportbolag - Invite Sports</title><meta name="description" content="Invite är inne i en expansiv period och söker därför efter en engagerad och serviceinriktad medarbetare som i första hand skall arbeta heltid med kundhantering och support till nya och existerande kunder."><link rel="canonical" href="https://invitesports.com/jobs/customer-service-worker/"><link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="icon" href="/media/favicon.png" sizes="32x32"><link rel="apple-touch-icon" href="/media/favicon.png"><link rel="stylesheet" href="/_astro/_virtual_atoll-config.nEP9odup.css">
+<!DOCTYPE html><html lang="sv"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Självständig kundservice-medarbetare till växande sportbolag - Invite Sports</title><meta name="description" content="Invite är inne i en expansiv period och söker därför efter en engagerad och serviceinriktad medarbetare som i första hand skall arbeta heltid med kundhantering och support till nya och existerande kunder."><link rel="canonical" href="https://invitesports.com/jobs/customer-service-worker/"><link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="icon" href="/media/favicon.png" sizes="32x32"><link rel="apple-touch-icon" href="/media/favicon.png"><link rel="stylesheet" href="/_astro/_virtual_atoll-config.CPdpkw3p.css">
 <style>@import"https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap";:root{--clr-green: #41ab34;--clr-green-dark: #2b861f;--clr-light-green: #fbfffa;--clr-blue: #10435f;--clr-invite-gradient: linear-gradient(-45deg, rgba(58, 90, 101, 1) 0%, #5fa746 100%)}html{scroll-behavior:smooth}@media(pointer:coarse){html{scroll-snap-type:y mandatory}}body{margin:0;font-family:Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:clamp(16px,1.8vw,20px);background:#fff}h1,h2,h3,h4,h5,h6{font-family:Montserrat,sans-serif;font-weight:700}h1{line-height:1.2}.iv-section{min-height:100dvh;scroll-snap-align:start}
 </style></head> <body> <main> <div data-component-id="jobhead-3f8a1c2d" class="iv-jobhead"><style>
       .iv-jobhead-band {
@@ -12,18 +12,120 @@
       }
       .iv-jobhead-logos a { text-align: center; }
       .iv-jobhead-logos img { width: 60%; display:inline; }
+      /* TextBlock measures itself differently from everything else on a job
+         ad: a bare max-w-2xl, 672px centred, while the article and the perk
+         grid are both 1000px centred with a 5vw inset. Three blocks, two
+         systems, so the copy stepped in and out as the window changed -- 104px
+         adrift at 1200px, flush against the screen below 672px. Same numbers as
+         the article, so the whole page shares one left edge and the images are
+         the only thing that breaks it. */
+      /* One type scale for the whole job ad, stated once. The article sets its
+         own 17px body and derives its headings from it, but TextBlock sits
+         outside the article and inherits the site's clamp(16px, 1.8vw, 20px)
+         instead -- and Tailwind's reset leaves headings at body size, so every
+         h2 outside the article rendered at 20px against the article's 25.5px.
+         Deriving both from one property means the two cannot drift apart.
+
+         h1 is included because the copy uses one mid-page (Om Invite). Sizing
+         only h2 would leave that heading smaller than the h2s under it. */
+      html:has(.iv-jobhead) { --jobad-text: 17px; }
+      html:has(.iv-jobhead) .max-w-2xl :is(h1, h2) {
+        font-size: calc(var(--jobad-text) * 1.5);
+        line-height: 1.25;
+        margin: 0 0 1rem;
+      }
+      /* The article's own 5rem rhythm between sections, but not above a heading
+         that opens a block -- there the block's spacing already did the work. */
+      html:has(.iv-jobhead) .max-w-2xl :is(h1, h2):not(:first-child) {
+        margin-top: 5rem;
+      }
+
+      html:has(.iv-jobhead) .max-w-2xl {
+        max-width: 1000px;
+        padding-inline: 5vw;
+      }
+
       @media (max-width: 768px) {
         .iv-jobhead-logos { flex-wrap: wrap; }
         .iv-jobhead-logos a { width: 50%; }
+
+        /* Images on a job ad break the frame on phones: 30px past each edge of
+           the screen, so the picture reads as a plate laid over the page rather
+           than a block obeying the same margin as the text.
+
+           Scoped by ancestor, not by a prop: .iv-jobhead is the block that
+           makes a page a job ad and appears on no other page, so keying off it
+           reaches exactly the ImageBlocks on these pages and cannot leak to the
+           297 elsewhere.
+
+           A descendant selector rather than a sibling one, because the two
+           surfaces disagree about structure. On the site the blocks are
+           siblings under main, and a sibling combinator matched; in the Puck
+           canvas every block is wrapped in its own div, so that same selector
+           matched zero elements -- the editor showed no bleed at all while the
+           site showed it, which is why this looked unfixable from one side.
+           Descending from html holds on both. The :not() keeps prose images
+           inside the article on their own margins.
+
+           Stated directly: 60px wider than the screen, pulled back 30px. It
+           was written as a margin-only calc off (100% - 100vw)/2 to survive a
+           container narrower than the viewport, but every container this lands
+           in is full width, so the calc bought nothing and hid what the rule
+           does.
+
+           !important because ImageBlock sets max-width and margin-inline as
+           inline styles for its Max width field, and a stylesheet does not beat
+           an inline declaration otherwise.
+
+           The clip goes on html, not body. Measured: with it on body the
+           computed overflow-x was clip and the bleed was still 30px each side,
+           yet documentElement.scrollWidth stayed 30px past the viewport — the
+           value does not propagate from body to the viewport here. The page
+           therefore still scrolled right, and since a page can never scroll
+           left of zero, the left edge looked cut while the right merely
+           scrolled out of the way: a bleed that appeared to be on one side
+           only. On html the scrollWidth matches the viewport exactly. clip
+           rather than hidden so no scroll container is created. */
+        html:has(.iv-jobhead) { overflow-x: clip; }
+        html:has(.iv-jobhead) figure:not(.iv-jobarticle figure) {
+          width: calc(100vw + 60px) !important;
+          max-width: none !important;
+          margin: 0 -30px !important;
+        }
+
+        /* The pictures carry their own invisible margin -- soft drop shadow and
+           white polaroid border, 2% to 10.3% depending on the file and never the
+           same on both sides. The box bleeds 30px either way, but on the files
+           with a wide right margin those 30px land entirely on shadow against a
+           white page, so nothing appears to be cut there.
+
+           Cropping the files fixed the bleed and broke the artwork: the shadow
+           is semi-transparent and light, so a crop tuned to find the picture cut
+           through the middle of the fade and left a hard edge, visible at every
+           width because the damage was in the pixels. So crop here instead,
+           inside the media query, where it costs nothing anywhere else.
+
+           128% wide pulled back 14% hides (128-100)/(2*128) = 10.9% of the image
+           on each side -- just past the worst 10.3% -- so solid picture reaches
+           both edges of the box on all five, and the 30px bleed then cuts
+           picture rather than shadow. The wrapper div is already
+           overflow-hidden, so it does the clipping. Nothing is cropped
+           vertically, which is where the shadows still have to read. */
+        html:has(.iv-jobhead) figure:not(.iv-jobarticle figure) img {
+          width: 128% !important;
+          max-width: none !important;
+          margin-left: -14% !important;
+        }
+
       }
     </style><div class="iv-jobhead-band"><a href="/"><img src="/media/invite-white.svg" alt="Invite Sports" style="display:inline-block"/></a></div><div class="iv-jobhead-logos"><a href="https://superinvite.com/" target="_blank" rel="noreferrer"><img src="/media/logo_superinvite.svg" alt="SuperInvite"/></a><a href="https://cupmanager.net/" target="_blank" rel="noreferrer"><img src="/media/logo_cupmanager.svg" alt="Cup Manager"/></a><a href="https://cupinsight.cups.nu/" target="_blank" rel="noreferrer"><img src="/media/logo_cupinsight.svg" alt="CupInsight"/></a><a href="https://cupinvite.com/" target="_blank" rel="noreferrer"><img src="/media/logo_cupinvite.svg" alt="CupInvite"/></a></div></div>
 <article data-component-id="jobarticle-csw" class="iv-jobarticle"><style>
       .iv-jobarticle {
         max-width: 1000px; margin: 0 auto; padding: 3vw 5vw;
-        line-height: 2rem; font-size: 17px;
+        line-height: 2rem; font-size: var(--jobad-text, 17px);
       }
       .iv-jobarticle h1 { font-size: 2.4em; line-height: 1.2; margin: 1rem 0; }
-      .iv-jobarticle h2 { font-size: 1.5em; margin: 5rem 0 1rem; }
+      .iv-jobarticle h2 { font-size: calc(var(--jobad-text, 17px) * 1.5); margin: 5rem 0 1rem; }
       .iv-jobarticle h1 + p > em { color: #888; font-size: 0.9rem; }
       .iv-jobarticle p, .iv-jobarticle ul { margin: 0 0 2rem; }
       .iv-jobarticle ul ul { margin-bottom: 0; }
@@ -48,48 +150,180 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><h1 id="självständig-kundservice-medarbetare-till-växande-sportbolag">Självständig kundservice-medarbetare till växande sportbolag</h1><p><em>Publicerat: 2025-12-11</em></p><p><strong>Invite är inne i en expansiv period och söker därför efter en engagerad och serviceinriktad medarbetare som i första hand skall arbeta heltid med kundhantering och support till nya och existerande kunder.</strong></p><p><img src="/media/cup_manager_00_variant.webp" alt/></p><h2 id="om-invite">Om Invite</h2><p>Invite är ett spännande företag med stora tillväxtambitioner. Vi har avdelningar i Oslo och Lund med kunder runt om i världen. I produktportföljen finns bland annat Cup Manager och Superinvite - verktyg som hanterar registreringar, betalningar och rapportering till idrottsrörelsens olika behov.</p><p>Cup Manager används av nästan tusen idrottsturneringar i Sverige, Norge, Danmark och resten av världen för att administrera allt från anmälningar till spelschema och resultat. Superinvite är en ledande lösning i Norge för att samla in avgifter för t.ex. träningar och fotbollsläger.</p><h2 id="om-supporten-på-invite">Om supporten på Invite</h2><p>Vi har en mycket hög ambitionsnivå när det gäller vår support. Vi svarar inte bara på frågor enligt ett manus utan har också en rådgivande roll för våra kunder. Det handlar om att förstå kundens önskemål och behov, och omvandla det till en passande konfiguration i systemet eller att rekommendera en bra arbetsprocess. De flesta av våra kunder känner vi vid namn och vi tror att goda relationer leder till förtroende och bra affärer.</p><h2 id="huvudsakliga-arbetsuppgifter">Huvudsakliga arbetsuppgifter</h2><ul>
-<li>Ge first line-support på telefon, chatt och e-post.</li>
-<li>Hålla bokade videomöten med kunder för mer ingående rådgivning, problemlösning och hjälp, exempelvis vid schemaläggning av turneringen.</li>
-<li>Hålla videomöten med potentiella kunder för att visa upp systemen.</li>
-<li>Aktiv uppföljning av turneringar under deras livscykel - anmälan, spelschema, genomförande, som exempel.</li>
-</ul><p><img src="/media/cup_manager_01_variant.webp" alt/></p><p>Vi söker efter dig som är självständig, organiserad, noggrann och engagerad. Du är serviceminded och har en förmåga att sätta dig in i kundens situation. Du är en god kommunikatör som kan få fram ditt budskap på ett effektivt sätt och bli förstådd av mottagaren.</p><p>Du tycker precis som vi att styrkan ligger i detaljerna och har förmågan och viljan att göra det där lilla extra i varje kundkommunikation. Du är duktig på att fånga upp, dokumentera och strukturera den feedback du får i din kontakt med kunderna.</p><p><img src="/media/cup_manager_02_variant.webp" alt/></p><p>Vi arbetar med frihet under ansvar, så du ska trivas med att fatta egna beslut och ta egna initiativ i din arbetsdag.</p><h2 id="för-att-passa-hos-oss-tror-vi-att-du">För att passa hos oss tror vi att du</h2><ul>
-<li>Har några års erfarenhet av arbete med kunder eller service sedan tidigare.</li>
-<li>Älskar att arbeta med människor och tycker det är roligt att leverera god service.</li>
-<li>Är bekväm med att arbeta i olika IT-system.</li>
-<li>Trivs i en miljö under förändring där du själv kan påverka riktningar och rutiner.</li>
-<li>Kommunicerar obehindrat på svenska och engelska i både tal och skrift. Du har förmåga att kunna läsa och förstå danska och norska. Fler språk är en fördel då vi satsar internationellt.</li>
-<li>Tar egna initiativ för att utvecklas och lära dig mer.</li>
-<li>Har erfarenhet av försäljning, då vi håller demonstrationer av programmen för nya kunder.</li>
-<li>Tycker om att möta våra kunder på vår årliga konferens i Lund, kanske har du även erfarenhet av eventplanering och vill vara en del av konferensplaneringen.</li>
-</ul><p><img src="/media/cup_manager_03_variant.webp" alt/></p><h2 id="detta-kan-vi-erbjuda">Detta kan vi erbjuda</h2><ul>
-<li>Ung och dynamisk miljö.</li>
-<li>Utvecklingsmöjligheter.</li>
-<li>En vardag där vi tänker utanför boxen.</li>
-<li>Frihet under ansvar.</li>
-<li>Spännande och varierande arbetsuppgifter.</li>
-<li>Fräscha kontorslokaler med parkering och närhet till buss och spårvagn.</li>
-<li>Ett mysigt café strax utanför entrédörren och två riktigt bra lunchrestauranger på nära avstånd.</li>
-<li>Efter upplärningsperiod finns det möjlighet att delvis arbeta hemifrån. På tisdagar träffas vi alla på kontoret.</li>
-<li>Trygg och fast anställning på ett företag med solid ekonomi.</li>
-</ul><h2 id="förmåner">Förmåner</h2></div></article>
+</style><div class="cm-rich"><h1 id="självständig-kundservice-medarbetare-till-växande-sportbolag">Självständig kundservice-medarbetare till växande sportbolag</h1><p><em>Publicerat: 2025-12-11</em></p><p><strong>Invite växer globalt och söker därför en engagerad och serviceinriktad kollega som i första hand skall arbeta heltid med kundhantering och support till nya och existerande kunder.</strong></p></div></article>
+<figure class="py-4" style="max-width:1000px;margin-inline:auto"><div class="relative w-full overflow-hidden rounded-lg"><img src="/media/cup_manager_00_variant.webp" alt="Image" class="w-full h-auto"/></div></figure>
+<div class="py-4 max-w-2xl mx-auto text-left"><div class="text-gray-700 leading-relaxed"><style>
+.cm-rich > *:first-child { margin-top: 0; }
+.cm-rich > *:last-child { margin-bottom: 0; }
+.cm-rich p { margin: 0 0 0.9em; }
+.cm-rich ul { list-style: disc; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich ol { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich li { margin: 0.3em 0; }
+.cm-rich a { color: var(--brand); text-decoration: none; }
+.cm-rich a:hover { text-decoration: underline; }
+.cm-rich strong { font-weight: 700; }
+.cm-rich blockquote { border-left: 3px solid var(--brand); padding-left: 1em; margin: 1em 0; font-style: italic; opacity: 0.85; }
+.cm-rich h3, .cm-rich h4 { font-weight: 700; margin: 1.2em 0 0.5em; font-family: var(--font-heading, Montserrat, sans-serif); }
+.cm-rich h3 { font-size: 1.25em; }
+.cm-rich h4 { font-size: 1.1em; }
+.cm-rich table { border-collapse: collapse; margin: 1em 0; }
+.cm-rich th, .cm-rich td { border: 1px solid #d5d5d5; padding: 5px 10px; text-align: center; }
+.cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
+.cm-rich img { max-width: 100%; height: auto; }
+.cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
+</style><div class="cm-rich"><h2 id="om-invite">Om Invite</h2><p>Invite är ett spännande företag med stora tillväxtambitioner. Vi har avdelningar i Oslo och Lund med kunder runt om i världen. I produktportföljen finns bland annat Cup Manager och Superinvite.</p><p>Cup Manager används av över tusen idrottsturneringar i Sverige, Norge, Danmark och resten av världen för att administrera allt från anmälningar till spelschema och resultat. Superinvite är en ledande lösning i Norge för att samla in avgifter för t.ex. träningar och fotbollsläger.</p><h2 id="om-supporten-på-invite">Om supporten på Invite</h2><p>Vi har en mycket hög ambitionsnivå när det gäller vår support. Vi svarar inte bara på frågor enligt ett manus utan har också en rådgivande roll för våra kunder. Det handlar om att förstå kundens önskemål och behov, och omvandla det till en passande konfiguration i systemet, eller att rekommendera en bra arbetsprocess. De flesta av våra kunder känner vi vid namn och vi tror att goda relationer leder till förtroende och bra affärer. Vi är en liten grupp som trivs väldigt bra tillsammans, för oss är det viktigt att växa med rätt kollegor.</p><h2 id="huvudsakliga-arbetsuppgifter">Huvudsakliga arbetsuppgifter</h2><ul>
+<li>
+<p>Ge first line-support på telefon, chatt och e-post.</p>
+</li>
+<li>
+<p>Hålla bokade videomöten med kunder för djupare rådgivning, problemlösning och utbildning, exempelvis vid schemaläggning av turneringar.</p>
+</li>
+<li>
+<p>Hålla videomöten med potentiella kunder för att sälja och demonstrera systemen.</p>
+</li>
+<li>
+<p>Aktiv uppföljning av turneringar under deras livscykel – anmälan, spelschema, genomförande, som exempel.</p>
+</li>
+</ul></div></div></div>
+<figure class="py-4" style="max-width:1000px;margin-inline:auto"><div class="relative w-full overflow-hidden rounded-lg"><img src="/media/cup_manager_01_variant.webp" alt="Image" class="w-full h-auto"/></div></figure>
+<div class="py-4 max-w-2xl mx-auto text-left"><div class="text-gray-700 leading-relaxed"><style>
+.cm-rich > *:first-child { margin-top: 0; }
+.cm-rich > *:last-child { margin-bottom: 0; }
+.cm-rich p { margin: 0 0 0.9em; }
+.cm-rich ul { list-style: disc; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich ol { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich li { margin: 0.3em 0; }
+.cm-rich a { color: var(--brand); text-decoration: none; }
+.cm-rich a:hover { text-decoration: underline; }
+.cm-rich strong { font-weight: 700; }
+.cm-rich blockquote { border-left: 3px solid var(--brand); padding-left: 1em; margin: 1em 0; font-style: italic; opacity: 0.85; }
+.cm-rich h3, .cm-rich h4 { font-weight: 700; margin: 1.2em 0 0.5em; font-family: var(--font-heading, Montserrat, sans-serif); }
+.cm-rich h3 { font-size: 1.25em; }
+.cm-rich h4 { font-size: 1.1em; }
+.cm-rich table { border-collapse: collapse; margin: 1em 0; }
+.cm-rich th, .cm-rich td { border: 1px solid #d5d5d5; padding: 5px 10px; text-align: center; }
+.cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
+.cm-rich img { max-width: 100%; height: auto; }
+.cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
+</style><div class="cm-rich"><p>Vi söker efter dig som är självständig, organiserad, noggrann och engagerad. Du är serviceminded och har en förmåga att sätta dig in i kundens situation. Du är en god kommunikatör som kan få fram ditt budskap på ett effektivt sätt och bli förstådd av mottagaren. Du är nyfiken och har en vilja att ständigt utvecklas.</p><p>Du tycker precis som vi att styrkan ligger i detaljerna och har förmågan och viljan att göra det där lilla extra i varje kundkommunikation. Du är duktig på att fånga upp, dokumentera och strukturera den feedback du får i din kontakt med kunderna.</p></div></div></div>
+<figure class="py-4" style="max-width:1000px;margin-inline:auto"><div class="relative w-full overflow-hidden rounded-lg"><img src="/media/cup_manager_02_variant.webp" alt="Image" class="w-full h-auto"/></div></figure>
+<div class="py-4 max-w-2xl mx-auto text-left"><div class="text-gray-700 leading-relaxed"><style>
+.cm-rich > *:first-child { margin-top: 0; }
+.cm-rich > *:last-child { margin-bottom: 0; }
+.cm-rich p { margin: 0 0 0.9em; }
+.cm-rich ul { list-style: disc; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich ol { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich li { margin: 0.3em 0; }
+.cm-rich a { color: var(--brand); text-decoration: none; }
+.cm-rich a:hover { text-decoration: underline; }
+.cm-rich strong { font-weight: 700; }
+.cm-rich blockquote { border-left: 3px solid var(--brand); padding-left: 1em; margin: 1em 0; font-style: italic; opacity: 0.85; }
+.cm-rich h3, .cm-rich h4 { font-weight: 700; margin: 1.2em 0 0.5em; font-family: var(--font-heading, Montserrat, sans-serif); }
+.cm-rich h3 { font-size: 1.25em; }
+.cm-rich h4 { font-size: 1.1em; }
+.cm-rich table { border-collapse: collapse; margin: 1em 0; }
+.cm-rich th, .cm-rich td { border: 1px solid #d5d5d5; padding: 5px 10px; text-align: center; }
+.cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
+.cm-rich img { max-width: 100%; height: auto; }
+.cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
+</style><div class="cm-rich"><p>Vi arbetar med frihet under ansvar, så du ska trivas med att fatta egna beslut och ta egna initiativ i din arbetsdag.</p><h2 id="för-att-passa-hos-oss-tror-vi-att-du">För att passa hos oss tror vi att du</h2><ul>
+<li>
+<p>Har några års erfarenhet av arbete med kunder eller service sedan tidigare.</p>
+</li>
+<li>
+<p>Älskar att arbeta med människor och tycker det är roligt att leverera god service.</p>
+</li>
+<li>
+<p>Är bekväm med att arbeta i olika IT-system.</p>
+</li>
+<li>
+<p>Trivs i en miljö under förändring där du själv kan påverka riktningar och rutiner.</p>
+</li>
+<li>
+<p>Kommunicerar obehindrat på svenska och engelska i både tal och skrift. Du har förmåga att läsa och förstå danska och norska. Fler språk är en fördel då vi satsar internationellt.</p>
+</li>
+<li>
+<p>Tar egna initiativ för att utvecklas och lära dig mer.</p>
+</li>
+<li>
+<p>Har erfarenhet av försäljning, då vi håller demonstrationer av programmen för nya kunder.</p>
+</li>
+<li>
+<p>Tycker om att möta våra kunder på vår årliga konferens i Lund, kanske har du även erfarenhet av eventplanering och vill vara en del av konferensplaneringen.</p>
+</li>
+</ul></div></div></div>
+<figure class="py-4" style="max-width:1000px;margin-inline:auto"><div class="relative w-full overflow-hidden rounded-lg"><img src="/media/cup_manager_03_variant.webp" alt="Image" class="w-full h-auto"/></div></figure>
+<div class="py-4 max-w-2xl mx-auto text-left"><div class="text-gray-700 leading-relaxed"><style>
+.cm-rich > *:first-child { margin-top: 0; }
+.cm-rich > *:last-child { margin-bottom: 0; }
+.cm-rich p { margin: 0 0 0.9em; }
+.cm-rich ul { list-style: disc; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich ol { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
+.cm-rich li { margin: 0.3em 0; }
+.cm-rich a { color: var(--brand); text-decoration: none; }
+.cm-rich a:hover { text-decoration: underline; }
+.cm-rich strong { font-weight: 700; }
+.cm-rich blockquote { border-left: 3px solid var(--brand); padding-left: 1em; margin: 1em 0; font-style: italic; opacity: 0.85; }
+.cm-rich h3, .cm-rich h4 { font-weight: 700; margin: 1.2em 0 0.5em; font-family: var(--font-heading, Montserrat, sans-serif); }
+.cm-rich h3 { font-size: 1.25em; }
+.cm-rich h4 { font-size: 1.1em; }
+.cm-rich table { border-collapse: collapse; margin: 1em 0; }
+.cm-rich th, .cm-rich td { border: 1px solid #d5d5d5; padding: 5px 10px; text-align: center; }
+.cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
+.cm-rich img { max-width: 100%; height: auto; }
+.cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
+</style><div class="cm-rich"><h2 id="detta-kan-vi-erbjuda">Detta kan vi erbjuda</h2><ul>
+<li>
+<p>Ung och dynamisk miljö.</p>
+</li>
+<li>
+<p>Utvecklingsmöjligheter.</p>
+</li>
+<li>
+<p>En vardag där vi tänker utanför boxen.</p>
+</li>
+<li>
+<p>Frihet under ansvar.</p>
+</li>
+<li>
+<p>Spännande och varierande arbetsuppgifter.</p>
+</li>
+<li>
+<p>Fräscha kontorslokaler med parkering och närhet till buss och spårvagn.</p>
+</li>
+<li>
+<p>Ett mysigt café strax utanför entrédörren och två riktigt bra lunchrestauranger på nära avstånd.</p>
+</li>
+<li>
+<p>Efter upplärningsperiod finns det möjlighet att delvis arbeta hemifrån. På tisdagar träffas vi alla på kontoret.</p>
+</li>
+<li>
+<p>Trygg och fast anställning på ett företag med solid ekonomi.</p>
+</li>
+</ul><h2 id="förmåner">Förmåner</h2></div></div></div>
 <div data-component-id="perks-9b4e7d1a" class="iv-perks"><style>
       .iv-perks {
-        display: grid; gap: 1.5rem;
+        display: grid;
+        /* Rows breathe more than columns: down the page the next card is the
+           only thing after the text, so a tight row reads as one block of copy,
+           while across the page the column edge already separates them. */
+        gap: 2.75rem 2.5rem;
         /* Same column as InviteJobArticle — the grid sits between two
            article halves and must align with them. */
         max-width: 1000px; margin: 0 auto; padding: 0 5vw; box-sizing: border-box;
       }
       @media (min-width: 768px) { .iv-perks { grid-template-columns: repeat(2, 1fr); } }
       .iv-perks [class*="DropZone"] { display: contents; }
-      .iv-perk h3 { display: flex; align-items: center; gap: 0.8rem; }
+      /* Tailwind's reset zeroes heading margins, so the description sat
+         directly under the title with nothing but line-height between them. */
+      .iv-perk h3 { display: flex; align-items: center; gap: 1rem; margin: 0 0 0.6rem; }
       .iv-perk-icon {
         width: 55px; height: 55px; border-radius: 100px; background: var(--clr-blue);
         color: #fff; display: flex; align-items: center; justify-content: center;
         flex-shrink: 0;
       }
       .iv-perk-icon svg { width: 26px; height: 26px; }
-    </style><div data-component-id="perk-customer-1" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M0 256h96l48-128 64 256 48-128h96"></path></svg></span>Friskvårdsbidrag</h3><style>
+    </style><div data-component-id="perk-customer-1" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M378.9 64c-32.4 0-62.9 15.6-81.9 41.9l-28 38.7c-3 4.2-7.8 6.6-13 6.6s-10-2.5-13-6.6l-28-38.7C196.1 79.6 165.6 64 133.1 64 77.3 64 32 109.3 32 165.1 32 202.5 47.9 238.5 69.8 272l53.6 0c6.3 0 12-3.7 14.6-9.4l31.5-69.2c2.5-5.6 8-9.2 14.1-9.4s11.8 3.1 14.6 8.5l58.9 111.3 49.3-80.2c3-4.8 8.2-7.7 13.9-7.6s10.8 3.2 13.6 8.1l22.8 39.9c2.8 5 8.2 8.1 13.9 8.1l71.7 0C464.1 238.5 480 202.5 480 165.1 480 109.3 434.7 64 378.9 64zM448 304l-77.4 0c-17.2 0-33.1-9.2-41.7-24.2l-9.4-16.5-49.9 81c-3 4.9-8.4 7.8-14.1 7.6s-10.9-3.4-13.6-8.5l-56.8-107.2-18 39.6C159.3 293 142.2 304 123.4 304l-70.5 0C24.5 264.2 0 216.9 0 165.1 0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1 512 216.9 487.5 264.2 459.1 304L448 304zM91 352l43.2 0c34.6 36.6 71.1 67.9 98.1 88.5 6.2 4.8 14.4 7.5 23.7 7.5s17.4-2.7 23.7-7.5c27-20.6 63.5-51.9 98.1-88.5l43.2 0c-41.5 47.6-88.7 88.5-121.9 113.9-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C179.6 440.5 132.5 399.6 91 352z"></path></svg></span>Friskvårdsbidrag</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -108,7 +342,7 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p>Upp till 5000 kronor kan du spendera på golf, gym, padel, klättring - eller vad du gillar att göra för att främja hälsan.</p></div></div><div data-component-id="perk-customer-2" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M64 64h384L256 288zM256 288v160M160 448h192"></path></svg></span>Afterwork</h3><style>
+</style><div class="cm-rich"><p>Upp till 5000 kronor kan du spendera på golf, gym, padel, klättring - eller vad du gillar att göra för att främja hälsan.</p></div></div><div data-component-id="perk-customer-2" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M496.5 32c6.3 0 12.1 3.7 14.6 9.5s1.5 12.5-2.8 17.2l-91.8 101 0 .2-.2 0-143.8 158.2 0 161.8 96 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-224 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l96 0 0-161.8-143.8-158.2-.2 0 0-.2-91.8-101C.4 54.1-.7 47.3 1.9 41.5S10.2 32 16.5 32l480 0zM139.9 160L256.5 288.2 373.1 160 139.9 160zm-29.1-32l291.3 0 58.2-64-407.7 0 58.2 64z"></path></svg></span>Afterwork</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -127,7 +361,7 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p>En gång i månaden bjuder Invite på afterwork. Det kan bli galna aktiviteter eller lite mys i någon trevlig lounge.</p></div></div><div data-component-id="perk-customer-3" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M32 224L256 48l224 176M96 224v224h320V224"></path></svg></span>Eget rum/arbeta hemma</h3><style>
+</style><div class="cm-rich"><p>En gång i månaden bjuder Invite på afterwork. Det kan bli galna aktiviteter eller lite mys i någon trevlig lounge.</p></div></div><div data-component-id="perk-customer-3" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M245.6 4.3c6.1-5.7 15.7-5.7 21.8 0l240 224c6.5 6 6.8 16.2 .8 22.6s-16.2 6.8-22.6 .8l-21.1-19.7 0 216c0 35.3-28.7 64-64 64l-288 0c-35.3 0-64-28.7-64-64l0-216-21.1 19.7c-6.5 6-16.6 5.7-22.6-.8s-5.7-16.6 .8-22.6l240-224zm10.9 33.6l-176 164.3 0 245.8c0 17.7 14.3 32 32 32l64 0 0-112c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 112 64 0c17.7 0 32-14.3 32-32l0-245.8-176-164.3zM208.5 480l96 0 0-112c0-17.7-14.3-32-32-32l-32 0c-17.7 0-32 14.3-32 32l0 112z"></path></svg></span>Eget rum/arbeta hemma</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -146,7 +380,7 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p>Du får ett eget rum på kontoret så att du kan stänga om dig, men du kan också arbeta en del hemifrån om du behöver det.</p></div></div><div data-component-id="perk-customer-4" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M256 128c-96 0-160 64-160 160s96 176 160 176 160-80 160-176-64-160-160-160zM256 128c0-64 32-96 64-96"></path></svg></span>Fruktkorg</h3><style>
+</style><div class="cm-rich"><p>Du får ett eget rum på kontoret så att du kan stänga om dig, men du kan också arbeta en del hemifrån om du behöver det.</p></div></div><div data-component-id="perk-customer-4" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M228.6 96l-4.6 0 0-4.6C224 58.6 250.6 32 283.4 32l4.6 0 0 4.6C288 69.4 261.4 96 228.6 96zm-18.3 32l18.3 0c50.5 0 91.4-40.9 91.4-91.4l0-18.3C320 8.2 311.8 0 301.7 0L283.4 0C232.9 0 192 40.9 192 91.4l0 18.3c0 10.1 8.2 18.3 18.3 18.3zM32 288c0-33.8 8-67.7 22.8-92 14.2-23.5 33-36 57.2-36 21 0 48.7 8.4 71.1 17.1 26.2 10.2 55.6 10.2 81.9 0 22.4-8.7 50.1-17.1 71.1-17.1 24.3 0 43 12.5 57.2 36 14.7 24.3 22.8 58.2 22.8 92 0 57.5-18 106.6-43.6 140.8-26 34.7-57.4 51.2-84.4 51.2-13.2 0-32-2.7-45.3-5-12.3-2.2-25-2.2-37.3 0-13.3 2.3-32.1 5-45.3 5-27 0-58.4-16.5-84.4-51.2-25.6-34.2-43.6-83.3-43.6-140.8zM160 512c16.2 0 37.4-3.2 50.8-5.5 8.7-1.5 17.6-1.5 26.3 0 13.5 2.4 34.6 5.5 50.8 5.5 80 0 160-96 160-224 0-76.3-35.7-160-112-160-27.3 0-59.7 10.3-82.7 19.3-18.8 7.3-39.9 7.3-58.7 0-22.9-8.9-55.4-19.3-82.7-19.3-76.3 0-112 83.7-112 160 0 128 80 224 160 224z"></path></svg></span>Fruktkorg</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -165,7 +399,7 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p>Varje måndag får vi en korg levererad med färsk frukt så att du får i dig lite extra vitaminer.</p></div></div><div data-component-id="perk-customer-5" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M64 128h288v160a96 96 0 0 1-96 96H160a96 96 0 0 1-96-96zM352 160h64a48 48 0 0 1 0 96h-64M32 448h352"></path></svg></span>Finkaffe</h3><style>
+</style><div class="cm-rich"><p>Varje måndag får vi en korg levererad med färsk frukt så att du får i dig lite extra vitaminer.</p></div></div><div data-component-id="perk-customer-5" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M400 64l16 0 0 240c0 35.3-28.7 64-64 64l-192 0c-35.3 0-64-28.7-64-64l0-240 304 0zm48 160l0-160 16 0c44.2 0 80 35.8 80 80s-35.8 80-80 80l-16 0zm0 80l0-48 16 0c61.9 0 112-50.1 112-112S525.9 32 464 32L96 32C78.3 32 64 46.3 64 64l0 240c0 53 43 96 96 96l192 0c53 0 96-43 96-96zM48 480c-8.8 0-16 7.2-16 16s7.2 16 16 16l416 0c8.8 0 16-7.2 16-16s-7.2-16-16-16L48 480z"></path></svg></span>Finkaffe</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -184,7 +418,7 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p>Sandby Kafferosteri är vår leverantör av kaffe. Vi vågar nästan säga att vi brygger stans bästa kontorskaffe i vår Moccamaster.</p></div></div><div data-component-id="perk-customer-6" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"><path d="M96 256l64-96h96l64 64h96l32 64-64 32v128h-64v-64H192v64h-64V320z"></path></svg></span>Ta med hunden</h3><style>
+</style><div class="cm-rich"><p>Sandby Kafferosteri är vår leverantör av kaffe. Vi vågar nästan säga att vi brygger stans bästa kontorskaffe i vår Moccamaster.</p></div></div><div data-component-id="perk-customer-6" class="iv-perk"><h3><span class="iv-perk-icon" aria-hidden="true"><svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M355.3-31.6C362.8-30.1 368-23.4 368-16l-.3 3.2-2.7 12.8 72.5 0c21.2 0 41.6 8.4 56.6 23.4l8.6 8.6 49.4 0c13.3 0 24 10.7 24 24l0 40c0 53-43 96-96 96l-36.5 0-11.5 34.6 0 237.4c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-87.5c-35.8 15.1-76.2 15.1-112 0l0 87.5c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-273.6C27.5 183 0 150.7 0 112 0 103.2 7.2 96 16 96s16 7.2 16 16c0 24.8 18.9 45.3 43.1 47.7l4.9 .3 219 0 37.3-179.3 1-3.1c2.9-6.8 10.4-10.9 17.9-9.3zM96 464c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-112c0-5.4 2.7-10.5 7.3-13.4s10.3-3.4 15.2-1.2l20 8.9c29 12.9 62 12.9 91 0l20-8.9 1.9-.7c4.5-1.4 9.4-.7 13.3 1.9 4.5 3 7.3 8 7.3 13.4l0 112c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16l0-235.2-86-36.8-218 0 0 272zM330.7 164.3l77.2 33.1 8.8-26.5 1-2.3c2.7-5.2 8.2-8.6 14.2-8.6l48 0c35.3 0 64-28.7 64-64l0-32-48 0c-4.2 0-8.3-1.7-11.3-4.7L471.4 46.1c-9-9-21.2-14.1-33.9-14.1l-79.2 0-27.6 132.3zM432 100a20 20 0 1 1 0-40 20 20 0 1 1 0 40z"></path></svg></span>Ta med hunden</h3><style>
 .cm-rich > *:first-child { margin-top: 0; }
 .cm-rich > *:last-child { margin-bottom: 0; }
 .cm-rich p { margin: 0 0 0.9em; }
@@ -204,13 +438,14 @@
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
 </style><div class="cm-rich"><p>Har du hund? Då behöver du inte tänka på hunddagis, pensionat, etc. Ta med den hit! Hundar finns här från och till.</p></div></div></div>
+<figure class="py-4" style="max-width:800px;margin-inline:auto"><div class="relative w-full overflow-hidden rounded-lg"><img src="/media/cup_manager_04_variant.webp" alt="Image" class="w-full h-auto"/></div></figure>
 <article data-component-id="jobarticle-customer-service-worker-2" class="iv-jobarticle"><style>
       .iv-jobarticle {
         max-width: 1000px; margin: 0 auto; padding: 3vw 5vw;
-        line-height: 2rem; font-size: 17px;
+        line-height: 2rem; font-size: var(--jobad-text, 17px);
       }
       .iv-jobarticle h1 { font-size: 2.4em; line-height: 1.2; margin: 1rem 0; }
-      .iv-jobarticle h2 { font-size: 1.5em; margin: 5rem 0 1rem; }
+      .iv-jobarticle h2 { font-size: calc(var(--jobad-text, 17px) * 1.5); margin: 5rem 0 1rem; }
       .iv-jobarticle h1 + p > em { color: #888; font-size: 0.9rem; }
       .iv-jobarticle p, .iv-jobarticle ul { margin: 0 0 2rem; }
       .iv-jobarticle ul ul { margin-bottom: 0; }
@@ -235,6 +470,6 @@
 .cm-rich th { background: rgba(0,0,0,0.045); font-weight: 700; }
 .cm-rich img { max-width: 100%; height: auto; }
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
-</style><div class="cm-rich"><p><img src="/media/cup_manager_04_variant.webp" alt/></p><h2 id="varaktighet-arbetstid">Varaktighet, arbetstid</h2><p>Tjänsten är en tillsvidareanställning på 100% med placering på vårt kontor vid Mobilvägen 10 i Lund. Tillträde enligt överenskommelse.</p><h2 id="ansökan">Ansökan</h2><p>Ansökan, eller eventuella frågor, skickas till <a href="mailto:petronella@cupmanager.net">petronella@cupmanager.net</a></p></div></article> </main> <a id="preview-btn" href="" class="fixed bottom-20 right-6 bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-colors z-40 font-medium" style="display:none"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path> <circle cx="12" cy="12" r="3"></circle> </svg>
+</style><div class="cm-rich"><h2 id="varaktighet-arbetstid">Varaktighet, arbetstid</h2><p>Tjänsten är en tillsvidareanställning på 100% med placering på vårt kontor vid Mobilvägen 10 i Lund. Tillträde enligt överenskommelse.</p><h2 id="ansökan">Ansökan</h2><p>Ansökan, eller eventuella frågor, skickas till <a href="mailto:petronella@cupmanager.net">petronella@cupmanager.net</a></p></div></article> </main> <a id="preview-btn" href="" class="fixed bottom-20 right-6 bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-colors z-40 font-medium" style="display:none"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path> <circle cx="12" cy="12" r="3"></circle> </svg>
 Preview Changes
-</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.BQnBQhxZ.js"></script> </body></html>
+</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.BEDT-FCD.js"></script> </body></html>
