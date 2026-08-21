@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="sv"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Invite Sports söker Country Sales Manager Sverige - Invite Sports</title><meta name="description" content="Invite Sports söker en entreprenör som vill öka kunskapen omkring Cup Manager och Superinvite i Sverige."><link rel="canonical" href="https://invitesports.com/jobs/country-sales-manager/"><link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="icon" href="/media/favicon.png" sizes="32x32"><link rel="apple-touch-icon" href="/media/favicon.png"><link rel="stylesheet" href="/_astro/_virtual_atoll-config.CPdpkw3p.css">
+<!DOCTYPE html><html lang="sv"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Invite Sports söker Country Sales Manager Sverige - Invite Sports</title><meta name="description" content="Invite Sports söker en entreprenör som vill öka kunskapen omkring Cup Manager och Superinvite i Sverige."><link rel="canonical" href="https://invitesports.com/jobs/country-sales-manager/"><link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="icon" href="/media/favicon.png" sizes="32x32"><link rel="apple-touch-icon" href="/media/favicon.png"><link rel="stylesheet" href="/_astro/_virtual_atoll-config.BhZxz2hp.css">
 <style>@import"https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap";:root{--clr-green: #41ab34;--clr-green-dark: #2b861f;--clr-light-green: #fbfffa;--clr-blue: #10435f;--clr-invite-gradient: linear-gradient(-45deg, rgba(58, 90, 101, 1) 0%, #5fa746 100%)}html{scroll-behavior:smooth}@media(pointer:coarse){html{scroll-snap-type:y mandatory}}body{margin:0;font-family:Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-size:clamp(16px,1.8vw,20px);background:#fff}h1,h2,h3,h4,h5,h6{font-family:Montserrat,sans-serif;font-weight:700}h1{line-height:1.2}.iv-section{min-height:100dvh;scroll-snap-align:start}
 </style></head> <body> <main> <div data-component-id="jobhead-a1d6f0b9" class="iv-jobhead"><style>
       .iv-jobhead-band {
@@ -28,6 +28,12 @@
 
          h1 is included because the copy uses one mid-page (Om Invite). Sizing
          only h2 would leave that heading smaller than the h2s under it. */
+      /* Hoisted out of the media query: the bleed only happens on phones, but
+         nothing is lost by refusing horizontal scroll at every width, and a
+         rule about the page's overflow reads better beside the page's scale
+         than buried in a breakpoint. clip, not hidden: it creates no scroll
+         container, so sticky still works. */
+      html:has(.iv-jobhead) { overflow-x: clip; }
       html:has(.iv-jobhead) { --jobad-text: 17px; }
       html:has(.iv-jobhead) .max-w-2xl :is(h1, h2) {
         font-size: calc(var(--jobad-text) * 1.5);
@@ -67,11 +73,14 @@
            Descending from html holds on both. The :not() keeps prose images
            inside the article on their own margins.
 
-           Stated directly: 60px wider than the screen, pulled back 30px. It
-           was written as a margin-only calc off (100% - 100vw)/2 to survive a
-           container narrower than the viewport, but every container this lands
-           in is full width, so the calc bought nothing and hid what the rule
-           does.
+           Stated directly: 60px wider than the page, pulled back 30px.
+
+           100% and not 100vw. They differ by exactly the scrollbar: 100vw counts
+           it, a block's width does not. The header is width:auto, so it stopped
+           at the body edge while the image reached 15px further, and that gap
+           read as the header being short on the right. Measuring the bleed
+           against the same box everything else is laid out in keeps the two
+           edges together whatever the scrollbar does.
 
            !important because ImageBlock sets max-width and margin-inline as
            inline styles for its Max width field, and a stylesheet does not beat
@@ -86,9 +95,8 @@
            scrolled out of the way: a bleed that appeared to be on one side
            only. On html the scrollWidth matches the viewport exactly. clip
            rather than hidden so no scroll container is created. */
-        html:has(.iv-jobhead) { overflow-x: clip; }
         html:has(.iv-jobhead) figure:not(.iv-jobarticle figure) {
-          width: calc(100vw + 60px) !important;
+          width: calc(100% + 60px) !important;
           max-width: none !important;
           margin: 0 -30px !important;
         }
@@ -332,4 +340,4 @@
 .cm-rich hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 1.4em 0; }
 </style><div class="cm-rich"><p><img src="/media/cup_manager_04_variant.webp" alt/></p><h2 id="varaktighet-arbetstid">Varaktighet, arbetstid</h2><p>Tjänsten är en tillsvidareanställning på 100%. Tillträde omgående eller enligt överenskommelse.</p><h2 id="ansökan">Ansökan</h2><p>Ansökan, eller eventuella frågor, skickas till <a href="mailto:petronella+sales@cupmanager.net">petronella+sales@cupmanager.net</a></p></div></article> </main> <a id="preview-btn" href="" class="fixed bottom-20 right-6 bg-amber-500 hover:bg-amber-600 text-black px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 transition-colors z-40 font-medium" style="display:none"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path> <circle cx="12" cy="12" r="3"></circle> </svg>
 Preview Changes
-</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.BEDT-FCD.js"></script> </body></html>
+</a> <script type="module" src="/_astro/PreviewButton.astro_astro_type_script_index_0_lang.B6g4nlny.js"></script> </body></html>
